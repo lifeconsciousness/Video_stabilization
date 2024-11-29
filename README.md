@@ -3,7 +3,7 @@
 ## How to stabilize video
 
 - Go to video_stabilization.py
-- In the function call specify path to video to be stabilized and output path
+- In the function call specify path to video to be stabilized and output path with file name
 
 ```python
 stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4', 
@@ -22,3 +22,5 @@ stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4',
 ### Credits
 
 [Video Stabilization Using Point Feature Matching in OpenCV](https://github.com/spmallick/learnopencv/tree/master/VideoStabilization)
+
+[Sampled video](https://www.youtube.com/watch?v=n2BwI-KhcYs)
