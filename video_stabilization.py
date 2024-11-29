@@ -48,11 +48,11 @@ def compute_jerkiness(transforms):
 
 
 
-def stabilize_video(path):
+def stabilize_video(input_path, output_path):
     # The larger the SMOOTHING_RADIUS, the more stable the video but less reactive to sudden panning
 
     # Read input video
-    cap = cv2.VideoCapture('videos/unstabilized/dog_unstabilized_movement.mp4')
+    cap = cv2.VideoCapture(input_path)
 
     # Get frame count
     n_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -68,7 +68,7 @@ def stabilize_video(path):
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 
     # Set up output video to only save the stabilized frame
-    out = cv2.VideoWriter('./videos/stabilized/video_out.mp4', fourcc, fps, (w, h))
+    out = cv2.VideoWriter(output_path, fourcc, fps, (w, h))
 
     # Read first frame
     _, prev = cap.read()
@@ -142,35 +142,6 @@ def stabilize_video(path):
     # Calculate newer transformation array
     transforms_smooth = transforms + difference
 
-
-
-
-
-    # # To estimate the effectiveness of stabilization, calculate root-mean-square error (less is better)
-    # rmse_motion = compute_rmse(trajectory, smoothed_trajectory)
-    # print(f"RMSE of motion vectors (dx, dy, da): {rmse_motion}")
-    #
-    # #Estimate jerkiness
-    # jerkiness_original = compute_jerkiness(transforms)
-    # jerkiness_smoothed = compute_jerkiness(transforms_smooth)
-    #
-    # print(f"Jerkiness before stabilization: {jerkiness_original}")
-    # print(f"Jerkiness after stabilization: {jerkiness_smoothed}")
-    #
-    # # Plot the motion trajectories before and after stabilization
-    # plt.figure(figsize=(10, 6))
-    # plt.plot(trajectory[:, 0], label='Original X')
-    # plt.plot(smoothed_trajectory[:, 0], label='Smoothed X', linestyle='dashed')
-    # plt.plot(trajectory[:, 1], label='Original Y')
-    # plt.plot(smoothed_trajectory[:, 1], label='Smoothed Y', linestyle='dashed')
-    # plt.title("Trajectory Comparison")
-    # plt.xlabel("Frame")
-    # plt.ylabel("Motion")
-    # plt.legend()
-    # plt.grid()
-    # plt.show()
-
-
     # Reset stream to first frame
     cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
@@ -217,7 +188,7 @@ def stabilize_video(path):
 
 
 
-# stabilize_video("hi")
+# stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4', './videos/stabilized/video_out.mp4')
 
 
 
