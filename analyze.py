@@ -89,10 +89,6 @@ def analyze_video_metrics_compare(original_video_path, stabilized_video_path):
     # Compute metrics for both videos
     rmse_original = vs.compute_rmse(trajectory_original, smoothed_original)
     rmse_stabilized = vs.compute_rmse(trajectory_stabilized, smoothed_stabilized)
-
-    rmse_original = vs.compute_rmse_new(trajectory_original, smoothed_original)
-    rmse_stabilized = vs.compute_rmse_new(trajectory_stabilized, smoothed_stabilized)
-
     jerkiness_original = vs.compute_jerkiness(transforms_original)
     jerkiness_stabilized = vs.compute_jerkiness(transforms_stabilized)
 
@@ -104,33 +100,46 @@ def analyze_video_metrics_compare(original_video_path, stabilized_video_path):
     print(f"RMSE of motion vectors (dx, dy, da): {rmse_stabilized}")
     print(f"Jerkiness of motion vectors (dx, dy, da): {jerkiness_stabilized}")
 
-    # Plot trajectories for comparison
-    plt.figure(figsize=(12, 8))
-
-    plt.subplot(2, 1, 1)
-    plt.plot(trajectory_original[:, 0], label='Original X')
-    plt.plot(smoothed_original[:, 0], label='Smoothed X', linestyle='dashed')
-    plt.plot(trajectory_original[:, 1], label='Original Y')
-    plt.plot(smoothed_original[:, 1], label='Smoothed Y', linestyle='dashed')
-    plt.title("Original Video Trajectory")
+    # Plot comparison
+    plt.figure(figsize=(12, 6))
+    plt.plot(trajectory_original[:, 0], label='Original X', color='blue')
+    plt.plot(trajectory_original[:, 1], label='Original Y', color='green')
+    plt.plot(trajectory_stabilized[:, 0], label='Stabilized X', color='orange', linestyle='dashed')
+    plt.plot(trajectory_stabilized[:, 1], label='Stabilized Y', color='red', linestyle='dashed')
+    plt.title("Motion Trajectory Comparison")
     plt.xlabel("Frame")
-    plt.ylabel("Motion")
+    plt.ylabel("Motion (X, Y)")
     plt.legend()
     plt.grid()
-
-    plt.subplot(2, 1, 2)
-    plt.plot(trajectory_stabilized[:, 0], label='Stabilized X')
-    plt.plot(smoothed_stabilized[:, 0], label='Smoothed X', linestyle='dashed')
-    plt.plot(trajectory_stabilized[:, 1], label='Stabilized Y')
-    plt.plot(smoothed_stabilized[:, 1], label='Smoothed Y', linestyle='dashed')
-    plt.title("Stabilized Video Trajectory")
-    plt.xlabel("Frame")
-    plt.ylabel("Motion")
-    plt.legend()
-    plt.grid()
-
-    plt.tight_layout()
     plt.show()
+
+    # # Plot trajectories for comparison
+    # plt.figure(figsize=(12, 8))
+    #
+    # plt.subplot(2, 1, 1)
+    # plt.plot(trajectory_original[:, 0], label='Original X')
+    # plt.plot(smoothed_original[:, 0], label='Smoothed X', linestyle='dashed')
+    # plt.plot(trajectory_original[:, 1], label='Original Y')
+    # plt.plot(smoothed_original[:, 1], label='Smoothed Y', linestyle='dashed')
+    # plt.title("Original Video Trajectory")
+    # plt.xlabel("Frame")
+    # plt.ylabel("Motion")
+    # plt.legend()
+    # plt.grid()
+    #
+    # plt.subplot(2, 1, 2)
+    # plt.plot(trajectory_stabilized[:, 0], label='Stabilized X')
+    # plt.plot(smoothed_stabilized[:, 0], label='Smoothed X', linestyle='dashed')
+    # plt.plot(trajectory_stabilized[:, 1], label='Stabilized Y')
+    # plt.plot(smoothed_stabilized[:, 1], label='Smoothed Y', linestyle='dashed')
+    # plt.title("Stabilized Video Trajectory")
+    # plt.xlabel("Frame")
+    # plt.ylabel("Motion")
+    # plt.legend()
+    # plt.grid()
+    #
+    # plt.tight_layout()
+    # plt.show()
 
 
 
@@ -276,14 +285,63 @@ def analyze_video_metrics(original_video_path, stabilized_video_path):
 
 
 
+def compute_rmse_old(original_trajectory, stabilized_trajectory):
+    """
+    Compute RMSE between original and stabilized trajectories.
 
-analyze_video_metrics('./videos/unstabilized/dog_unstabilized_movement.mp4',
-                      './videos/stabilized/video_out.mp4')
+    Args:
+        original_trajectory (np.ndarray): Original motion trajectory.
+        stabilized_trajectory (np.ndarray): Stabilized motion trajectory.
+
+    Returns:
+        float: RMSE value.
+    """
+    return np.sqrt(np.mean((original_trajectory - stabilized_trajectory) ** 2))
 
 
+def compute_rmse(original_trajectory, stabilized_trajectory):
+    """
+    Compute RMSE between original and stabilized trajectories.
+
+    Args:
+        original_trajectory (np.ndarray): Original motion trajectory.
+        stabilized_trajectory (np.ndarray): Stabilized motion trajectory.
+
+    Returns:
+        float: RMSE value.
+    """
+    # Find the minimum length between the two trajectories
+    min_length = min(len(original_trajectory), len(stabilized_trajectory))
+
+    # Truncate both trajectories
+    original_trajectory = original_trajectory[:min_length]
+    stabilized_trajectory = stabilized_trajectory[:min_length]
+
+    # Compute RMSE
+    return np.sqrt(np.mean((original_trajectory - stabilized_trajectory) ** 2))
 
 
+def compute_jerkiness(transforms_diff):
+    """
+    Compute jerkiness as the sum of frame-to-frame differences.
+
+    Args:
+        transforms_diff (np.ndarray): Frame-to-frame differences in motion.
+
+    Returns:
+        float: Jerkiness value.
+    """
+    return np.sum(np.linalg.norm(transforms_diff, axis=1))
 
 
+# analyze_video_metrics_compare('./videos/unstabilized/dog_unstabilized_movement.mp4',
+#                       './videos/stabilized/dog_movement_cv.mp4')
+
+# analyze_video_metrics_compare('./videos/unstabilized/dog_unstabilized_static.mp4',
+#                       './videos/stabilized/dog_static_cv.mp4')
+
+
+analyze_video_metrics('./videos/unstabilized/dog_unstabilized_static.mp4',
+                      './videos/stabilized/dog_static_cv.mp4')
 
 

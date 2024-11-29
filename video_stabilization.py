@@ -45,27 +45,6 @@ def compute_jerkiness(transforms):
     jerkiness = np.std(frame_differences, axis=0)
     return jerkiness
 
-def compute_rmse_new(original_trajectory, stabilized_trajectory):
-    """
-    Compute RMSE between original and stabilized trajectories.
-
-    Args:
-        original_trajectory (np.ndarray): Original motion trajectory.
-        stabilized_trajectory (np.ndarray): Stabilized motion trajectory.
-
-    Returns:
-        float: RMSE value.
-    """
-    # Find the minimum length between the two trajectories
-    min_length = min(len(original_trajectory), len(stabilized_trajectory))
-
-    # Truncate both trajectories
-    original_trajectory = original_trajectory[:min_length]
-    stabilized_trajectory = stabilized_trajectory[:min_length]
-
-    # Compute RMSE
-    return np.sqrt(np.mean((original_trajectory - stabilized_trajectory) ** 2))
-
 
 
 
