@@ -23,4 +23,6 @@ stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4',
 
 [Repository the code is based on](https://github.com/spmallick/learnopencv/tree/master/VideoStabilization)
 
-[Sampled video](https://www.youtube.com/watch?v=n2BwI-KhcYs)
+[Sampled video dog](https://www.youtube.com/watch?v=n2BwI-KhcYs)
+
+[Sampled video drone](https://www.youtube.com/watch?v=mQxnB2X26CI)
