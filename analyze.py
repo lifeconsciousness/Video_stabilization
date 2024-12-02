@@ -136,6 +136,7 @@ def compute_rmse_old(original_trajectory, stabilized_trajectory):
 
 # analyze_video_metrics('./videos/unstabilized/dog_unstabilized_movement.mp4', './videos/stabilized/dog_movement_cv.mp4')
 
+
 # FFMPEG
 
 # analyze_video_metrics('./videos/unstabilized/dog_unstabilized_static.mp4','./videos/stabilized/dog_static_ffmpeg.mp4')
@@ -143,4 +144,12 @@ def compute_rmse_old(original_trajectory, stabilized_trajectory):
 # analyze_video_metrics('./videos/unstabilized/dog_unstabilized_movement.mp4', './videos/stabilized/dog_movement_ffmpeg.mp4')
 
 
+# Online video stabilizer
 
+# analyze_video_metrics('./videos/unstabilized/dog_unstabilized_static.mp4','./videos/stabilized/dog_static_online.mp4')
+
+# analyze_video_metrics('./videos/unstabilized/dog_unstabilized_movement.mp4', './videos/stabilized/dog_movement_online.mp4')
+
+# analyze_video_metrics('./videos/unstabilized/drone_unstabilized.mp4', './videos/stabilized/drone_stabilized_opencv.mp4')
+
+analyze_video_metrics('./videos/unstabilized/drone_unstabilized.mp4', './videos/stabilized/drone_stabilized_online.mp4')

@@ -1,9 +1,5 @@
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-
-SMOOTHING_RADIUS = 50
-
 
 def movingAverage(curve, radius):
     window_size = 2 * radius + 1
@@ -47,10 +43,10 @@ def compute_jerkiness(transforms):
 
 
 
+# The larger the SMOOTHING_RADIUS, the more stable the video but less reactive to sudden panning
+SMOOTHING_RADIUS = 50
 
 def stabilize_video(input_path, output_path):
-    # The larger the SMOOTHING_RADIUS, the more stable the video but less reactive to sudden panning
-
     # Read input video
     cap = cv2.VideoCapture(input_path)
 
@@ -190,7 +186,7 @@ def stabilize_video(input_path, output_path):
 
 # stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4', './videos/stabilized/video_out.mp4')
 
-
+# stabilize_video('videos/unstabilized/drone_unstabilized.mp4', './videos/stabilized/drone_stabilized_opencv.mp4')
 
 
 

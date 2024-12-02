@@ -21,6 +21,6 @@ stabilize_video('videos/unstabilized/dog_unstabilized_movement.mp4',
 
 ### Credits
 
-[Video Stabilization Using Point Feature Matching in OpenCV](https://github.com/spmallick/learnopencv/tree/master/VideoStabilization)
+[Repository the code is based on](https://github.com/spmallick/learnopencv/tree/master/VideoStabilization)
 
 [Sampled video](https://www.youtube.com/watch?v=n2BwI-KhcYs)
